@@ -1,36 +1,33 @@
 class Solution {
     public List<List<String>> partition(String s) {
-        // Backtracking
-        // Edge case
-        if(s == null || s.length() == 0) return new ArrayList<>();
-        
-        List<List<String>> result = new ArrayList<>();
-        helper(s, new ArrayList<>(), result);
-        return result;
+        List<List<String>> res = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
+        helper(s, 0, temp, res);
+        return res;
     }
-    public void helper(String s, List<String> step, List<List<String>> result) {
-        // Base case
-        if(s == null || s.length() == 0) {
-            result.add(new ArrayList<>(step));
+
+    private void helper(String s, int start, List<String> temp, List<List<String>> res) {
+        if (s.length() == start) {
+            res.add(new ArrayList<>(temp));
             return;
         }
-        for(int i = 1; i <= s.length(); i++) {
-            String temp = s.substring(0, i);
-            if(!isPalindrome(temp)) continue; // only do backtracking when current string is palindrome
-            
-            step.add(temp);  // choose
-            helper(s.substring(i, s.length()), step, result); // explore
-            step.remove(step.size() - 1); // unchoose
+        for (int i = start; i < s.length(); i++) {
+            String sub = s.substring(start, i+1);
+            if (isPalindrome(sub)) {
+                temp.add(sub);
+                helper(s, i + 1, temp, res);
+                temp.remove(temp.size() - 1);
+            }
         }
-        return;
     }
-    public boolean isPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        while(left <= right) {
-            if(s.charAt(left) != s.charAt(right))
+
+    private boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        while (left <= right) {
+            if (s.charAt(left++) != s.charAt(right--)) {
                 return false;
-            left ++;
-            right --;
+            }
         }
         return true;
     }
