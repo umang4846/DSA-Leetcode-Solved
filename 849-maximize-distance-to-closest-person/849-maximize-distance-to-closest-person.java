@@ -1,7 +1,7 @@
 class Solution {
     public int maxDistToClosest(int[] seats) {
         //TC : O(N)
-        //SC : O(N)
+        //SC : O(1)
         int N = seats.length;
         int prefixZero = -1;
         int suffixZero = -1;
