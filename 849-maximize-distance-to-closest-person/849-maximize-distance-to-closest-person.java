@@ -3,32 +3,27 @@ class Solution {
         //TC : O(N)
         //SC : O(N)
         int N = seats.length;
-        int[] left = new int[N], right = new int[N];
-        Arrays.fill(left, N);
-        Arrays.fill(right, N);
+        int prefixZero = -1;
+        int suffixZero = -1;
+        int maxZero = -1;
+        int zero = 0;
 
         for (int i = 0; i < N; ++i) {
-            if (seats[i] == 1) {
-                left[i] = 0;
+            if (seats[i] == 0) {
+                zero++;
             }
-            else if (i > 0){
-                left[i] = left[i-1] + 1;
+            else {
+                if(prefixZero == -1){
+                    prefixZero = zero;
+                }else{
+                    maxZero = Math.max(maxZero,zero);
+                }
+                zero = 0;
             } 
         }
+        suffixZero = zero;
 
-        for (int i = N-1; i >= 0; --i) {
-            if (seats[i] == 1) {
-                right[i] = 0;
-            }
-            else if (i < N-1) {
-                right[i] = right[i+1] + 1;
-            }
-        }
-
-        int ans = 0;
-        for (int i = 0; i < N; ++i)
-            if (seats[i] == 0)
-                ans = Math.max(ans, Math.min(left[i], right[i]));
-        return ans;
+        
+        return Math.max(prefixZero,Math.max(suffixZero, (maxZero+1)/2));
     }
 }
