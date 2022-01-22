@@ -5,10 +5,9 @@ class Solution {
     
     private int quickSelect(int[] nums, int low, int high, int k){
         int pi = partition(nums,low,high);
-        int ktemp = k;
-        if (pi == nums.length-ktemp) {
+        if (pi == nums.length-k) {
             return nums[pi];
-        } else if (pi > nums.length-ktemp) {
+        } else if (pi > nums.length-k) {
             return quickSelect(nums, low, pi - 1, k);
         } else {
             return quickSelect(nums, pi + 1, high, k);
