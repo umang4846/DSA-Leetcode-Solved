@@ -1,9 +1,19 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(nums == null || nums.length < 4){  //corner case
+            return ans;
+        }
         Arrays.sort(nums);
-        Set<List<Integer>> ans = new HashSet<>();
+
         for(int i=0;i<nums.length-3;i++){
+             if(i > 0 && nums[i - 1] == nums[i]){   //avoid duplicated
+                continue;
+            }
             for(int j=i+1;j<nums.length-2;j++){
+                if(j > i + 1 && nums[j] == nums[j - 1]){   //avoid duplicated
+                    continue;
+                }
                 int low = j+1;
                 int high = nums.length-1;
                 while(low < high){
@@ -28,6 +38,6 @@ class Solution {
                 }
             }
         }
-        return new ArrayList<>(ans);
+        return ans;
     }
 }
