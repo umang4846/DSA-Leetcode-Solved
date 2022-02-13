@@ -1,28 +1,17 @@
 class Solution {
-  List<List<Integer>> output = new ArrayList();
-  int n, k;
-
-  public void backtrack(int first, ArrayList<Integer> curr, int[] nums) {
-    // if the combination is done
-    if (curr.size() == k) {
-      output.add(new ArrayList(curr));
-      return;
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<Integer>(), nums, 0);
+        return result;
     }
-    for (int i = first; i < n; ++i) {
-      // add i into the current combination
-      curr.add(nums[i]);
-      // use next integers to complete the combination
-      backtrack(i + 1, curr, nums);
-      // backtrack
-      curr.remove(curr.size() - 1);
+    void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start){
+        if(nums.length == start){
+            result.add(new ArrayList<>(tempList));    
+            return;
+        }
+        tempList.add(nums[start]);
+        backtrack(result, tempList, nums, start+1);
+        tempList.remove(tempList.size()-1);
+        backtrack(result, tempList, nums, start+1);
     }
-  }
-
-  public List<List<Integer>> subsets(int[] nums) {
-    n = nums.length;
-    for (k = 0; k < n + 1; ++k) {
-      backtrack(0, new ArrayList<Integer>(), nums);
-    }
-    return output;
-  }
 }
